@@ -1,11 +1,9 @@
 (ns todo-list.core
-    (:require [reagent.core :as reagent :refer [atom]]
-              [reagent.session :as session]
-              [secretary.core :as secretary :include-macros true]
-              [goog.events :as events]
-              [goog.history.EventType :as EventType]
-              [cljsjs.react :as react])
-    (:import goog.History))
+  (:require [todo-list.history :as history]
+            [reagent.core :as reagent :refer [atom]]
+            [reagent.session :as session]
+            [secretary.core :as secretary :include-macros true]
+            [cljsjs.react :as react]))
 
 ;; -------------------------
 ;; Views
@@ -31,19 +29,9 @@
 (secretary/defroute "/about" []
   (session/put! :current-page #'about-page))
 
-;; -------------------------
-;; History
-;; must be called after routes have been defined
-(defn hook-browser-navigation! []
-  (doto (History.)
-    (events/listen
-     EventType/NAVIGATE
-     (fn [event]
-       (secretary/dispatch! (.-token event))))
-    (.setEnabled true)))
 
 ;; -------------------------
 ;; Initialize app
 (defn init! []
-  (hook-browser-navigation!)
+  (history/hook-browser-navigation!)
   (reagent/render-component [current-page] (.getElementById js/document "app")))
