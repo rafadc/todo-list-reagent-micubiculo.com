@@ -1,5 +1,6 @@
 (ns todo-list.core
   (:require [todo-list.history :as history]
+            [todo-list.views.about :as about]
             [reagent.core :as reagent :refer [atom]]
             [reagent.session :as session]
             [secretary.core :as secretary :include-macros true]
@@ -12,10 +13,6 @@
   [:div [:h2 "Welcome to todo-list"]
    [:div [:a {:href "#/about"} "go to about page"]]])
 
-(defn about-page []
-  [:div [:h2 "About todo-list"]
-   [:div [:a {:href "#/"} "go to the home page"]]])
-
 (defn current-page []
   [:div [(session/get :current-page)]])
 
@@ -27,8 +24,7 @@
   (session/put! :current-page #'home-page))
 
 (secretary/defroute "/about" []
-  (session/put! :current-page #'about-page))
-
+  (session/put! :current-page #'about/about-page))
 
 ;; -------------------------
 ;; Initialize app
