@@ -26,9 +26,11 @@
             :on-click #(add-task (.-value (.getElementById js/document "newTaskText")))}]])
 
 (defn- task-count []
-  "Shows the total task count"
-  [:div
-   [:p (str "The total task count is: " (count @tasks))]])
+  "Shows the task metrics"
+  (let [total-tasks (count @tasks)
+        completed-tasks (count (filter #(= :done (:status %)) @tasks))]
+    [:div
+     [:p (str "Tasks completed " completed-tasks "/" total-tasks)]]))
 
 (defn todo-list []
   [:div
