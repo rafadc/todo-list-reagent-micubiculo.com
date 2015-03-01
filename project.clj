@@ -47,7 +47,13 @@
                                         ;;:externs       ["react/externs/react.js"]
                                         :asset-path   "js/out"
                                         :optimizations :none
-                                        :pretty-print  true}}}}
+                                        :pretty-print  true}}
+                       :production {:source-paths ["src/cljs"]
+                                     :compiler {:output-to     "target/resources/public/js/app.js"
+                                                :asset-path   "target/resources/js/out"
+                                                :optimizations :advanced
+                                                :pretty-print  false}}
+                                     }}
 
   :profiles {:dev {:repl-options {:init-ns todo-list.handler
                                   :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
