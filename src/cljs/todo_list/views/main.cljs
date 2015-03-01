@@ -3,12 +3,19 @@
 
 (defonce tasks (atom []))
 
+(defn- toggle-status [status]
+  (if (= status :done) :notdone :done))
+
+(defn- toggle-task [index]
+  (swap! tasks #(update-in @tasks [index :status] toggle-status)))
+
 (defn- add-task [text]
   (swap! tasks #(conj % {:text text, :status :notdone})))
 
-(defn- show-task [task]
+(defn- show-task [index task]
   "Show a single task"
-  ^{:key task} [:div {:class (str "task task-" (name (:status task)))}
+  ^{:key index} [:div {:class (str "task task-" (name (:status task)))
+                      :on-click #(toggle-task index)}
                 [:b (:text task)]])
 
 (defn- new-task-input []
@@ -22,5 +29,5 @@
   [:div
    [:h2 "TODO list"]
    (new-task-input)
-   (map show-task @tasks)
+   (map-indexed show-task @tasks)
    [:div [:a {:href "#/about"} "go to about page"]]])
