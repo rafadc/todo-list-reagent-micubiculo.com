@@ -25,9 +25,15 @@
    [:input {:type "button" :value "Add task"
             :on-click #(add-task (.-value (.getElementById js/document "newTaskText")))}]])
 
+(defn- task-count []
+  "Shows the total task count"
+  [:div
+   [:p (str "The total task count is: " (count @tasks))]])
+
 (defn todo-list []
   [:div
    [:h2 "TODO list"]
    (new-task-input)
    (map-indexed show-task @tasks)
+   (task-count)
    [:div [:a {:href "#/about"} "go to about page"]]])
