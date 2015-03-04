@@ -22,6 +22,6 @@
 (defn current-page []
   [:div [(session/get :current-page)]])
 
-(defn init! []
+(defn ^:export run []
   (history/hook-browser-navigation!)
   (reagent/render-component [current-page] (.getElementById js/document "app")))

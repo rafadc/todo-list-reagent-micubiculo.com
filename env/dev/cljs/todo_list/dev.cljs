@@ -12,4 +12,4 @@
 
 (weasel/connect "ws://localhost:9001" :verbose true)
 
-(core/init!)
+(core/run)
